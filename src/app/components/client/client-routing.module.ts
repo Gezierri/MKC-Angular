@@ -1,9 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ClientComponent} from "./client.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ClientFormComponent } from './client-form/client-form.component';
+import { ClientComponent } from './list/client.component';
+
 
 const routes: Routes = [
-  {path: '', component: ClientComponent}
+  {path: '', component: ClientComponent},
+  {path: 'form', component: ClientFormComponent}
 ];
 
 @NgModule({

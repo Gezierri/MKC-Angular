@@ -1,7 +1,7 @@
-
-import {Component, OnInit} from '@angular/core';
-import {Client} from 'src/app/model/client';
-import {ClientsService} from "../../services/clients.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Client } from 'src/app/model/client';
+import { ClientsService } from 'src/app/services/clients.service';
 
 @Component({
   selector: 'app-client',
@@ -13,9 +13,9 @@ export class ClientComponent implements OnInit {
   page: number = 1;
   itemsPerPage: number = 20;
   totalClients: number = 0;
-  searchName: string = ''
+  searchName: string = '';
 
-  constructor(private clientService: ClientsService) {}
+  constructor(private clientService: ClientsService, private route: Router) {}
 
   ngOnInit(): void {
     this.listAll();
