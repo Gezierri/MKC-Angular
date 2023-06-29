@@ -1,6 +1,7 @@
-import { ClientsService } from './../../services/clients.service';
-import { Component, OnInit } from '@angular/core';
-import { Client } from 'src/app/model/client';
+
+import {Component, OnInit} from '@angular/core';
+import {Client} from 'src/app/model/client';
+import {ClientsService} from "../../services/clients.service";
 
 @Component({
   selector: 'app-client',
@@ -12,6 +13,7 @@ export class ClientComponent implements OnInit {
   page: number = 1;
   itemsPerPage: number = 20;
   totalClients: number = 0;
+  searchName: string = ''
 
   constructor(private clientService: ClientsService) {}
 
@@ -20,7 +22,7 @@ export class ClientComponent implements OnInit {
   }
 
   public listAll(): void {
-    this.clientService.listAll().subscribe((response) => {
+    this.clientService.listAll(this.searchName).subscribe((response) => {
       this.clients = response;
       this.totalClients = response.length;
     });

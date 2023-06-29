@@ -1,16 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule as RouterModules } from '@angular/router';
-import { ClientComponent } from './components/client/client.component';
-import { OrderComponent } from './components/order/order.component';
-import { ProductComponent } from './components/product/product.component';
-import { HomeComponent } from './components/home/home.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Routes, RouterModule as RouterModules} from '@angular/router';
+import {ClientComponent} from './components/client/client.component';
+import {OrderComponent} from './components/order/order.component';
+import {ProductComponent} from './components/product/product.component';
+import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'clients', component: ClientComponent },
-  { path: 'orders', component: OrderComponent },
-  { path: 'products', component: ProductComponent }
+  {path: 'home', component: HomeComponent},
+  {
+    path: 'clients',
+    loadChildren: () => import('./components/client/client.module')
+      .then(m => m.ClientModule)
+  },
+  {path: 'orders', component: OrderComponent},
+  {path: 'products', component: ProductComponent}
 ]
 
 @NgModule({
@@ -21,4 +25,5 @@ const routes: Routes = [
   ],
   exports: [RouterModules]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
