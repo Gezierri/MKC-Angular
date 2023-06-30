@@ -1,26 +1,32 @@
-.navbar-vertical{
+.navbar-vertical {
   background-color: #212b36;
 }
 
-img{
+img {
   filter: invert(100%);
 }
 
-a{
-  color: white!important;
+a {
+  color: white !important;
   text-decoration: none;
 }
 
-li{
+li {
   text-align: start;
   font-size: 24px;
   border-radius: 10px;
   width: 100%;
   padding: 10px;
-  transition: 0.2s;
 }
 
-li:hover{
+li:hover {
   background-color: #8d9399;
   transition-timing-function: ease;
+}
+
+.sidebar-link.active {
+  color: #aeaeae!important;
+  font-size: 25px;
+  transition-timing-function: ease;
+  transition: 0.1s;
 }
