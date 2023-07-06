@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./client-form.component.css']
 })
 export class ClientFormComponent {
-
+  value1: string = '47991766414'
+  date: Date = new Date()
 }

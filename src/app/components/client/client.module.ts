@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ClientFormComponent } from './client-form/client-form.component';
 import { ClientComponent } from './list/client.component';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [ClientComponent, ClientFormComponent],
@@ -15,6 +17,8 @@ import { ClientComponent } from './list/client.component';
     ClientRoutingModule,
     NgxPaginationModule,
     FormsModule,
+    InputMaskModule,
+    CalendarModule
   ],
 })
 export class ClientModule {}

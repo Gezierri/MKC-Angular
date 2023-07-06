@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,6 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {ClientModule} from "./components/client/client.module";
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import {ClientModule} from "./components/client/client.module";
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
-    ClientModule
+    ClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
