@@ -1,10 +1,15 @@
 <div class="container mt-3 p-3">
   <h2 class="mb-4">Cadastro de cliente</h2>
-  <form>
+  <form [formGroup]="clientForm" (submit)="onSubmit()">
+
     <div class="col-6 mb-3">
-      <label for="inputPassword5" class="form-label">Nome</label>
-      <input type="text" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+      <label for="client_name" class="form-label">Nome</label>
+      <input type="text" class="form-control" aria-describedby="passwordHelpBlock" formControlName="client_name">
+      <div *ngIf="clientForm.controls['client_name'].errors && submitted">
+        Nome deve ser preenchido
+      </div>
     </div>
+
     <div class="col-2 mb-3">
       <label for="inputPassword5" class="form-label">Data de Nascimento</label>
 
