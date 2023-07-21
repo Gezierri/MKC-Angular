@@ -1,17 +1,16 @@
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { AppRoutingModule } from './app-routing.module';
-import { ProductComponent } from './components/product/product.component';
-import { OrderComponent } from './components/order/order.component';
-import { HomeComponent } from './components/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
-import { NgxPaginationModule } from 'ngx-pagination';
+import {AppComponent} from './app.component';
+import {SidebarComponent} from './components/sidebar/sidebar.component';
+import {AppRoutingModule} from './app-routing.module';
+import {ProductComponent} from './components/product/product.component';
+import {OrderComponent} from './components/order/order.component';
+import {HomeComponent} from './components/home/home.component';
+import {HttpClientModule} from '@angular/common/http';
+import {NgxPaginationModule} from 'ngx-pagination';
 import {ClientModule} from "./components/client/client.module";
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,8 +26,10 @@ import {ClientModule} from "./components/client/client.module";
     HttpClientModule,
     NgxPaginationModule,
     ClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

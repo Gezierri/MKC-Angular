@@ -1,14 +1,11 @@
-export interface Client {
-  id: string;
-  name: string;
-  email: string;
-  dateBirth: Date;
-  phoneNumber: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  country: string;
+import {Address} from "./address";
+
+export class Client {
+  id: number = 0;
+  name: string = '';
+  dateBirth: string = '';
+  email: string = '';
+  phone: string = '';
+  address: Address = new Address();
 }
+
