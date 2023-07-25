@@ -38,7 +38,7 @@
         <td>{{client.address.city}}</td>
         <td class="text-center">
           <div class="justify-content-center">
-            <button class="btn btn-info">
+            <button class="btn btn-info" (click)="editClient(this.client.id)">
               <i class="bi bi-pencil text-white"></i>
             </button>
             <button class="btn btn-danger ms-2">

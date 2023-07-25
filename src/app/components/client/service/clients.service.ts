@@ -4,7 +4,7 @@ import {catchError, Observable, of, tap} from 'rxjs';
 import {Client} from '../../../model/client';
 import {environment} from 'src/environments/environment';
 import {Root} from '../../../model/root';
-import { NGXLogger } from 'ngx-logger';
+import {NGXLogger} from 'ngx-logger';
 
 const BASE_URL = environment.apiUrl;
 
@@ -62,11 +62,29 @@ export class ClientsService {
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T): any {
+  public update(client: Client): Observable<Client> {
+    const url = `${BASE_URL}/${this.endpoint}/${client.id}`;
+    return this.http.put<Client>(url, client, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Client>('update')
+        )
+      );
+  }
+
+  public findById(id: number): Observable<Client> {
+    const url = `${BASE_URL}/${this.endpoint}/${id}`;
+    return this.http.get<Client>(url)
+      .pipe(
+        catchError(this.handleError<Client>('findById')
+        )
+      );
+  }
+
+  private handleError<T>(operation: string, result?: T): any {
     console.log(result);
-    //this.looger.log("deded")
+    this.looger.log("deded")
     return (error: any): Observable<T> => {
-      //this.looger.log("AASAS"  + error);
+      this.looger.log("AASAS" + error);
       console.log("AQUI");
       console.log(error);
       return of(result as T);

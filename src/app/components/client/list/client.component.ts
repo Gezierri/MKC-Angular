@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Client} from 'src/app/model/client';
 import {Root} from 'src/app/model/root';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -19,7 +19,7 @@ export class ClientComponent implements OnInit {
   itemPerPage: number = 0;
   loading = true;
 
-  constructor(private clientService: ClientsService, private route: ActivatedRoute) {}
+  constructor(private clientService: ClientsService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -60,6 +60,9 @@ export class ClientComponent implements OnInit {
   public onPageChange(pageNumber: number): void {
     this.page = (pageNumber - 1);
     this.listAll();
-    console.log('Página selecionada:', pageNumber);
+  }
+
+  public editClient(clientId: number): void {
+    this.router.navigate(['/client-form', clientId]);
   }
 }

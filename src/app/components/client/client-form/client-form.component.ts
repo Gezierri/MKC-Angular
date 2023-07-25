@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Client} from 'src/app/model/client';
 import {State} from 'src/app/model/states';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './client-form.component.html',
   styleUrls: ['./client-form.component.css'],
 })
-export class ClientFormComponent {
+export class ClientFormComponent implements OnInit {
   states: State = new State();
   client: Client = new Client();
   clientForm: FormGroup;
@@ -21,7 +21,8 @@ export class ClientFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private clientsService: ClientsService,
-    private route: Router
+    private route: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.clientForm = this.formBuilder.group({
       client_name: ['', Validators.required],
@@ -33,7 +34,7 @@ export class ClientFormComponent {
       neighborhood: [''],
       number: [''],
       street: ['']
-    })
+    });
   }
 
   public get valuesForm(): any {
@@ -67,5 +68,24 @@ export class ClientFormComponent {
 
   public goListClient(): void {
     this.route.navigate(['/clients']);
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      const id = params['id'];
+      console.log(id)
+      if (id) {
+        this.findById(id);
+      }
+    });
+  }
+
+  private findById(id: number): void {
+    this.clientsService.findById(id).subscribe((clientResponse) => {
+      this.client = clientResponse;
+      this.clientForm.patchValue({
+        name: this.client.name
+      })
+    });
   }
 }
