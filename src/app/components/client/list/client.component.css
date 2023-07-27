@@ -1,3 +1,13 @@
 .max-height{
   max-height: 700px;
 }
+
+/*.custom_delete_button{
+  background-color: red!important;
+  color: white!important;
+}*/
+
+.swal2-confirm {
+  background-color: red!important;
+  color: white!important;
+}

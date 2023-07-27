@@ -3,6 +3,9 @@ import {Client} from 'src/app/model/client';
 import {Root} from 'src/app/model/root';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import * as moment from 'moment';
+import Swal from "sweetalert2";
+
 
 @Component({
   selector: 'app-client',
@@ -19,7 +22,8 @@ export class ClientComponent implements OnInit {
   itemPerPage: number = 0;
   loading = true;
 
-  constructor(private clientService: ClientsService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private clientService: ClientsService, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -37,7 +41,6 @@ export class ClientComponent implements OnInit {
     this.clientService.listAll(this.page, this.listPerPage, 'ASC', 'name').subscribe((response) => {
       this.loading = true;
       this.root = response;
-      console.log(response.content.map((r) => r.address.city))
       this.totalClients = response.totalElements;
       this.itemPerPage = response.size;
       this.page = response.number;
@@ -57,12 +60,31 @@ export class ClientComponent implements OnInit {
     }, 500);
   }
 
+  public editClient(clientId: number): void {
+    this.router.navigate(['/client-form', clientId]);
+  }
+
+  public deleteClient(id: number, name: string) {
+    Swal.fire({
+      title: `Deseja excluir o cliente ${name}?`,
+      showCancelButton: true,
+      confirmButtonText: 'Deletar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clientService.delete(id).subscribe((resp) => {
+          Swal.fire('Deletado!', 'Cliente deletado com sucesso.', 'success')
+          this.listAll()
+        })
+      }
+    })
+  }
+
+  public ageFromDateOfBirthday(dateOfBirth: any): number {
+    return moment().diff(dateOfBirth, 'years');
+  }
+
   public onPageChange(pageNumber: number): void {
     this.page = (pageNumber - 1);
     this.listAll();
-  }
-
-  public editClient(clientId: number): void {
-    this.router.navigate(['/client-form', clientId]);
   }
 }

@@ -11,6 +11,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {LoadingComponent} from "../loading/loading.component";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG, // Nível de log desejado (por exemplo, DEBUG, INFO, ERROR)
       serverLogLevel: NgxLoggerLevel.OFF // Nível de log para envio ao servidor (OFF para desativar)
-    })
+    }),
+    SharedModule,
   ],
 })
 export class ClientModule { }

@@ -14,7 +14,7 @@
     <div>
       <div class="col-2 mb-3">
         <label for="date_birth" class="form-label">Data de Nascimento</label>
-        <p-calendar name="date_birth" formControlName="date_birth"></p-calendar>
+        <p-calendar name="date_birth" formControlName="date_birth" dateFormat="dd/mm/yy"></p-calendar>
         <div *ngIf="clientForm.controls['date_birth'].errors && submitted" class="error">
           *Campo deve ser preenchido
         </div>
@@ -70,9 +70,9 @@
       <input type="text" class="form-control" formControlName="street"/>
     </div>
 
-    <button type="submit" class="btn btn-primary" (click)="onSubmit()">
-      <i class="bi bi-person-plus"></i>
-      <span class="m-2">Cadastrar</span>
+    <button type="submit" class="btn" [class.btn-info]="client.id != 0" [class.btn-primary]="client.id == 0" (click)="onSubmit()">
+      <i class="bi" [class.bi-arrow-counterclockwise]="client.id != 0" [class.bi-person-plus]="client.id == 0"></i>
+      <span class="m-2">{{ client.id != 0 ? 'Atualizar' : 'Cadastrar' }}</span>
     </button>
     <a class="btn btn-success ms-2" routerLink="/clients">
       <i class="bi bi-arrow-left-circle"></i>

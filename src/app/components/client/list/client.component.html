@@ -21,8 +21,11 @@
       <tr>
         <th>Nome</th>
         <th>Idade</th>
+        <th>Aniversario</th>
         <th>Telefone</th>
+        <th>E-mail</th>
         <th>Cidade</th>
+        <th>Bairro</th>
         <th></th>
       </tr>
       </thead>
@@ -33,15 +36,18 @@
                 )">
 
         <td>{{client.name}}</td>
-        <td>{{client.dateBirth}}</td>
+        <td>{{ageFromDateOfBirthday(client.dateBirth)}}</td>
+        <td>{{client.dateBirth | dateFormat}}</td>
         <td>{{client.phone}}</td>
+        <td>{{client.email}}</td>
         <td>{{client.address.city}}</td>
+        <td>{{client.address.neighborhood}}</td>
         <td class="text-center">
           <div class="justify-content-center">
-            <button class="btn btn-info" (click)="editClient(this.client.id)">
+            <button class="btn btn-info" (click)="editClient(client.id)">
               <i class="bi bi-pencil text-white"></i>
             </button>
-            <button class="btn btn-danger ms-2">
+            <button class="btn btn-danger ms-2" (click)="deleteClient(client.id, client.name)">
               <i class="bi bi-trash"></i>
             </button>
           </div>

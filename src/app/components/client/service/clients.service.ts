@@ -13,11 +13,12 @@ const BASE_URL = environment.apiUrl;
 })
 export class ClientsService {
   private endpoint = 'clients';
+
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
 
-  constructor(private http: HttpClient, private looger: NGXLogger) {
+  constructor(private http: HttpClient, private logger: NGXLogger) {
   }
 
   public listAll(page: number, listPerPage: number, direction: string, orderBy: string): Observable<Root> {
@@ -28,8 +29,10 @@ export class ClientsService {
     params = params.append('direction', String(direction))
     params = params.append('orderBy', String(orderBy))
 
+    const url = `${BASE_URL}/${this.endpoint}/page?${params}`;
+
     return this.http
-      .get<Client[]>(`${BASE_URL}/${this.endpoint}/page?${params}`)
+      .get<Client[]>(url)
       .pipe(
         tap(value => console.log(value)),
         tap(value => console.log(`${BASE_URL}/${this.endpoint}/page?${params}`)),
@@ -52,7 +55,9 @@ export class ClientsService {
 
     params = params.append('name', String(name));
 
-    return this.http.get<Client[]>(`${BASE_URL}/${this.endpoint}?${params}`)
+    const url = `${BASE_URL}/${this.endpoint}?${params}`;
+
+    return this.http.get<Client[]>(url)
       .pipe(
         tap(value => console.log(value)),
         tap(value => console.log(`${BASE_URL}/${this.endpoint}?${params}`)),
@@ -80,13 +85,19 @@ export class ClientsService {
       );
   }
 
+  public delete(id: number): Observable<Client> {
+    const url = `${BASE_URL}/${this.endpoint}/${id}`;
+
+    return this.http.delete<Client>(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Client>('delete')
+        )
+      );
+  }
+
   private handleError<T>(operation: string, result?: T): any {
-    console.log(result);
-    this.looger.log("deded")
     return (error: any): Observable<T> => {
-      this.looger.log("AASAS" + error);
-      console.log("AQUI");
-      console.log(error);
+      this.logger.log("ERROR " + error);
       return of(result as T);
     };
   }

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Client} from 'src/app/model/client';
 import {State} from 'src/app/model/states';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
 import Swal from 'sweetalert2';
+import { parseISO } from 'date-fns';
 
 
 @Component({
@@ -22,18 +23,18 @@ export class ClientFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private clientsService: ClientsService,
     private route: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.clientForm = this.formBuilder.group({
       client_name: ['', Validators.required],
       date_birth: [null, Validators.required],
       phone_number: ['', Validators.required],
-      email: new FormControl('', [Validators.email]),
+      email: ['', [Validators.required, Validators.email]],
       city: [''],
       state: [''],
       neighborhood: [''],
       number: [''],
-      street: ['']
+      street: [''],
     });
   }
 
@@ -70,6 +71,29 @@ export class ClientFormComponent implements OnInit {
     this.route.navigate(['/clients']);
   }
 
+  private findById(id: number): void {
+    this.clientsService.findById(id).subscribe((clientResponse) => {
+      this.client = clientResponse;
+
+      console.log(this.client.dateBirth)
+      const newDate = new Date(this.client.dateBirth)
+      console.log(newDate)
+      this.client.dateBirth = parseISO(this.client.dateBirth.toString());
+
+      this.clientForm.setValue({
+        client_name: this.client.name,
+        date_birth: this.client.dateBirth,
+        phone_number: this.client.phone,
+        email: this.client.email,
+        street: this.client.address.street,
+        number: this.client.address.number,
+        city: this.client.address.city,
+        neighborhood: this.client.address.neighborhood,
+        state: this.client.address.state,
+      })
+    });
+  }
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       const id = params['id'];
@@ -77,15 +101,6 @@ export class ClientFormComponent implements OnInit {
       if (id) {
         this.findById(id);
       }
-    });
-  }
-
-  private findById(id: number): void {
-    this.clientsService.findById(id).subscribe((clientResponse) => {
-      this.client = clientResponse;
-      this.clientForm.patchValue({
-        name: this.client.name
-      })
     });
   }
 }
