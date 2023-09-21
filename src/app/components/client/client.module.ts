@@ -12,14 +12,19 @@ import {LoadingComponent} from "../loading/loading.component";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {LoggerModule, NgxLoggerLevel} from "ngx-logger";
 import {SharedModule} from "../../shared/shared.module";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
-  declarations: [
-    ClientComponent,
-    ClientFormComponent,
-    NumericOnlyDirective,
-    LoadingComponent
-  ],
+    declarations: [
+        ClientComponent,
+        ClientFormComponent,
+        NumericOnlyDirective,
+        LoadingComponent
+    ],
   imports: [
     CommonModule,
     ClientRoutingModule,
@@ -34,6 +39,14 @@ import {SharedModule} from "../../shared/shared.module";
       serverLogLevel: NgxLoggerLevel.OFF // Nível de log para envio ao servidor (OFF para desativar)
     }),
     SharedModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
   ],
+    exports: [
+        LoadingComponent
+    ]
 })
 export class ClientModule { }

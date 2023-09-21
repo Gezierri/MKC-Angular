@@ -1,0 +1,50 @@
+<div class="container mt-3 p-3">
+  <h2 class="mb-4">Lista de produtos</h2>
+  <div class="mb-4 row">
+    <div class="col-12 col-lg d-flex justify-content-end space">
+      <form class="d-flex">
+        <div class="input-group">
+          <input (keyup)="findProductByName()" name="searchName" type="text"
+                 class="form-control border-success"
+                 placeholder="Buscar...">
+        </div>
+      </form>
+      <button class="btn btn-primary ms-2" routerLink="/product-form">
+        <i class="bi bi-person-plus"></i>
+        <span class="m-2">Novo</span>
+      </button>
+    </div>
+  </div>
+  <div class="album py-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card">
+            <img src="https://images-na.ssl-images-amazon.com/images/I/51kTjTU2UvL._AC_UL232_SR232,232_.jpg"
+                 class="card-img-top p-4" alt="Fissure in Sandstone">
+            <div class="card-body text-center">
+              <h5 class="card-title">Default Card Title</h5>
+              <p class="card-text">This is some default example text to build on the card title and make up the bulk of
+                the card's content.</p>
+              <a href="#!" class="btn btn-primary">Default Button</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXHn56ALrZ8-0nXUx14uBAQ0zJuwUkkGHxCQ&usqp=CAU"
+              class="card-img-top p-4" alt="Fissure in Sandstone">
+            <div class="card-body text-center">
+              <h5 class="card-title">Default Card Title</h5>
+              <p class="card-text">This is some default example text to build on the card title and make up the bulk
+                of the card's content.</p>
+              <a href="#!" class="btn btn-primary">Default Button</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

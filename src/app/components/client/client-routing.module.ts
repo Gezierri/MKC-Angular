@@ -5,8 +5,8 @@ import { ClientComponent } from './list/client.component';
 
 const routes: Routes = [
   {path: '', component: ClientComponent},
-  {path: 'client-form', component: ClientFormComponent},
-  {path: 'client-form/:id', component: ClientFormComponent},
+  {path: 'client-product-form', component: ClientFormComponent},
+  {path: 'client-product-form/:id', component: ClientFormComponent},
 ];
 
 @NgModule({

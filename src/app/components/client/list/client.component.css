@@ -1,13 +1,18 @@
-.max-height{
-  max-height: 700px;
+.table-container{
+  width: 90%;
+  margin: auto;
 }
 
-/*.custom_delete_button{
-  background-color: red!important;
-  color: white!important;
-}*/
+table {
+  width: 100%;
+}
 
 .swal2-confirm {
   background-color: red!important;
   color: white!important;
+}
+
+mat-button{
+  background: #0D1321;
+  color: #F0EBD8;
 }

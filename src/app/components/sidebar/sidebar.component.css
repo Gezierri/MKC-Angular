@@ -1,9 +1,22 @@
-.navbar-vertical {
-  background-color: #212b36;
+.sidenav {
+  background: #0D1321;
+  width: 250px;
+  text-align: center;
+}
+
+.mat-divider {
+  background: #F0EBD8;
+}
+
+mat-icon {
+  color: #0D1321;
 }
 
 img {
   filter: invert(100%);
+  width: 90%;
+  height: 5%;
+  margin: 20px 0 20px 0;
 }
 
 a {
@@ -14,19 +27,31 @@ a {
 li {
   text-align: start;
   font-size: 24px;
-  border-radius: 10px;
-  width: 100%;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 12px;
+  margin: 5px;
 }
 
 li:hover {
-  background-color: #8d9399;
+  background-color: #748CAB;
   transition-timing-function: ease;
 }
 
 .sidebar-link.active {
-  color: #aeaeae!important;
+  color: #3E5C76 !important;
   font-size: 25px;
   transition-timing-function: ease;
   transition: 0.1s;
+}
+
+.side-container {
+  height: 100%;
+}
+
+.container-content{
+  font-size: 2rem;
+  color: lightgray;
+  height: 94vh;
+  margin: 0 12px;
+  border-radius: 12px;
 }

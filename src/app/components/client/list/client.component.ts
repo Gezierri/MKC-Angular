@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Client} from 'src/app/model/client';
-import {Root} from 'src/app/model/root';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Client} from 'src/app/model/client/client';
+import {ClientPage} from 'src/app/model/client/clientPage';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as moment from 'moment';
 import Swal from "sweetalert2";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 @Component({
@@ -13,7 +15,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./client.component.css'],
 })
 export class ClientComponent implements OnInit {
-  root: Root = new Root();
+  root: ClientPage = new ClientPage();
   clients: Client[] = [];
   page: number = 0;
   listPerPage: number = 20;
@@ -21,6 +23,10 @@ export class ClientComponent implements OnInit {
   searchName: string = ''
   itemPerPage: number = 0;
   loading = true;
+  public errorMessage: string = '';
+
+  displayedColumns: string[] = ['Nome', 'Idade', 'Aniversario', 'Telefone', 'E-mail', 'Cidade', 'Bairro', 'Acoes'];
+  dataSource = new MatTableDataSource<Client>(this.clients);
 
   constructor(private clientService: ClientsService, private route: ActivatedRoute, private router: Router) {
   }
@@ -37,16 +43,24 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  public listAll(): void {
-    this.clientService.listAll(this.page, this.listPerPage, 'ASC', 'name').subscribe((response) => {
-      this.loading = true;
-      this.root = response;
-      this.totalClients = response.totalElements;
-      this.itemPerPage = response.size;
-      this.page = response.number;
-      setTimeout(() => {
+    public listAll(): void {
+    this.clientService.listAll(this.page, this.listPerPage, 'ASC', 'name').subscribe({
+      next: (response) => {
+        console.log(`Teste ${response}`);
+        this.loading = true;
+        this.root = response;
+        this.totalClients = response.totalElements;
+        this.itemPerPage = response.size;
         this.loading = false;
-      }, 1000);
+        console.log('ROOT ' + this.root.content);
+        console.log('Response ' + response.content);
+        this.dataSource = new MatTableDataSource<Client>(response.content);
+      },
+      error: (error) => {
+        console.log(`ERROR ====> ${error}`)
+        this.errorMessage = 'Ocorreu um erro ao buscar os dados. Por favor, verifique sua conexão.';
+        this.loading = true; // Oculta o indicador de carregamento
+      },
     });
   }
 
@@ -61,7 +75,7 @@ export class ClientComponent implements OnInit {
   }
 
   public editClient(clientId: number): void {
-    this.router.navigate(['/client-form', clientId]);
+    this.router.navigate(['/client-product-form', clientId]);
   }
 
   public deleteClient(id: number, name: string) {
@@ -72,7 +86,7 @@ export class ClientComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.clientService.delete(id).subscribe((resp) => {
-          Swal.fire('Deletado!', 'Cliente deletado com sucesso.', 'success')
+          Swal.fire('Deletado!', 'Cliente deletado com sucesso.', 'success').then(r => r);
           this.listAll()
         })
       }
@@ -87,4 +101,13 @@ export class ClientComponent implements OnInit {
     this.page = (pageNumber - 1);
     this.listAll();
   }
+
+  // @ts-ignore
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 }
+
+

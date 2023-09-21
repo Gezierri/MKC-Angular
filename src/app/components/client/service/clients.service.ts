@@ -1,10 +1,11 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {catchError, Observable, of, tap} from 'rxjs';
-import {Client} from '../../../model/client';
+import {Client} from '../../../model/client/client';
 import {environment} from 'src/environments/environment';
-import {Root} from '../../../model/root';
+import {ClientPage} from '../../../model/client/clientPage';
 import {NGXLogger} from 'ngx-logger';
+import {Schedule} from "../../../app.component";
 
 const BASE_URL = environment.apiUrl;
 
@@ -21,7 +22,7 @@ export class ClientsService {
   constructor(private http: HttpClient, private logger: NGXLogger) {
   }
 
-  public listAll(page: number, listPerPage: number, direction: string, orderBy: string): Observable<Root> {
+  public listAll(page: number, listPerPage: number, direction: string, orderBy: string): Observable<ClientPage> {
     let params = new HttpParams();
 
     params = params.append('page', String(page))
@@ -36,17 +37,7 @@ export class ClientsService {
       .pipe(
         tap(value => console.log(value)),
         tap(value => console.log(`${BASE_URL}/${this.endpoint}/page?${params}`)),
-        catchError(this.handleError<Root>('listAll'))
-      );
-  }
-
-  public save(client: Client): Observable<Client> {
-    return this.http
-      .post<Client>(`${BASE_URL}/${this.endpoint}`, client, this.httpOptions)
-      .pipe(
-        catchError(
-          this.handleError<Client>('save')
-        )
+        catchError(this.handleError<ClientPage>('listAll'))
       );
   }
 
@@ -62,7 +53,17 @@ export class ClientsService {
         tap(value => console.log(value)),
         tap(value => console.log(`${BASE_URL}/${this.endpoint}?${params}`)),
         catchError(
-          this.handleError<Client>('findClientByName')
+          this.handleError<Client>('findClientByName'),
+        )
+      );
+  }
+
+  public save(client: Client): Observable<Client> {
+    return this.http
+      .post<Client>(`${BASE_URL}/${this.endpoint}`, client, this.httpOptions)
+      .pipe(
+        catchError(
+          this.handleError<Client>('save')
         )
       );
   }
@@ -95,8 +96,23 @@ export class ClientsService {
       );
   }
 
+  public saveSchedule(schedule: Schedule): Observable<Schedule> {
+    console.log(schedule);
+    console.log("http://localhost:9000/schedules");
+    return this.http.post<Schedule>("http://localhost:9000/schedules", schedule, this.httpOptions).pipe(
+      tap(
+        () => console.log(schedule),
+      ),
+      catchError(
+        this.handleError<Schedule>('save', schedule)
+      )
+    );
+  }
+
   private handleError<T>(operation: string, result?: T): any {
+    console.log('ERROR' + operation, result)
     return (error: any): Observable<T> => {
+      console.log('ERROR' + error)
       this.logger.log("ERROR " + error);
       return of(result as T);
     };

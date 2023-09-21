@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Client} from 'src/app/model/client';
-import {State} from 'src/app/model/states';
+import {Client} from 'src/app/model/client/client';
+import {State} from 'src/app/model/client/states';
 import {ClientsService} from 'src/app/components/client/service/clients.service';
 import Swal from 'sweetalert2';
 import { parseISO } from 'date-fns';
